@@ -13,5 +13,5 @@ import { CommonModule } from '@angular/common';
 export class TabComponent {
 nameTab = input("nameTab");
 srcImage = input("foto.jpg");
-conBorde = input(false);
+withBorder = input(false);
 }
