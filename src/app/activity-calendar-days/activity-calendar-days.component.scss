@@ -1,0 +1,16 @@
+span {
+    cursor: pointer;
+    color: black;
+    border: none;
+    border-radius: 1px;
+    background: transparent;
+    font-size: 11px;
+    font-weight: 500;
+    transition: 0.3s;
+
+    &:hover {
+        background-color: #007bff;
+        color: white;
+    }
+}
+  
