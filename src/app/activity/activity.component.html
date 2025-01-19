@@ -1,0 +1,45 @@
+<section class="container mt-3">
+    @if (isFree){
+        <div class="row align-items-center">
+            <div class="col-2 text-center">
+                <strong>{{hourStart}}<br>{{hourEnd}}</strong>
+            </div>
+            <div class="col-10 bg-success text-white d-flex flex-column align-items-center">
+              <button class="btn btn-link text-danger align-self-end" (click)="onAddActivity('create')">
+                <i class="fa-solid fa-plus fa-2xl text-danger pt-3"></i>
+              </button>
+                <h5 class="display-5 text-center m-0 pb-3 flex-grow-1 d-flex align-items-center">FREE</h5>
+            </div>
+        </div>
+    }
+    @else {
+        <div class="row align-items-center">
+            <div class="col-2 text-center">
+                <strong>{{hourStart}}<br>{{hourEnd}}</strong>
+            </div>
+            <div class="col-10 bg-light d-flex align-items-center justify-content-between py-3">
+                <div class="d-flex gap-3 ms-0">
+                  @if (instructorsName.length > 1){
+                      @for (name of instructorsName; track $index){
+                          <div class="d-flex flex-column align-items-center">
+                              <i class="fa-solid fa-user fa-2xl text-danger py-3"></i>
+                              <small>{{instructorsName[$index]}}</small>
+                          </div>
+                      }
+                  }
+                  @else {
+                    <div class="d-flex flex-column align-items-center">
+                        <i class="fa-solid fa-user fa-2xl text-danger py-3"></i>
+                        <small>{{instructorsName[0]}}</small>
+                    </div>
+                  }
+                </div>
+                <i [ngClass]="activityIcon" class="text-danger"></i>
+                <div class="d-flex flex-column align-items-end">
+                    <button class="btn btn-link text-danger" (click)="onAddActivity('edit')"><i class="fa-solid fa-pen fa-lg"></i></button>
+                    <button class="btn btn-link text-danger" (click)="onDeleteActivity()"><i class="fa-solid fa-trash fa-lg"></i></button>
+                </div>
+            </div>
+        </div>
+    }
+</section>
