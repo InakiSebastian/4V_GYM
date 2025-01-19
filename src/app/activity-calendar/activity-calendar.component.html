@@ -1,0 +1,34 @@
+<div class="container-fluid shadow py-3 rounded mb-5">
+    <!-- Encabezado -->
+    <div class="datepicker-header d-flex justify-content-between align-items-center mb-3">
+        <i class="fa-solid fa-arrow-left ms-4" (click)="goToPreviousMonth()"></i>
+        <h4 class="text-center m-0">{{ monthNames[currentDate.getMonth()] }} {{ currentDate.getFullYear() }}</h4>
+        <i class="fa-solid fa-arrow-right me-4" (click)="goToNextMonth()"></i>
+    </div>
+    <!-- Días de la semana hardcoded -->
+    <div class="row gx-0 text-center mb-2">
+        <div class="col flex-grow-1 p-0 m-0 dayNames" *ngFor="let dayName of dayNames">
+            <strong>{{ dayName }}</strong>
+        </div>
+    </div>
+    <!-- Días del mes representados en números -->
+    <div class="row gx-0">
+        <div class="col-12 p-0 m-0">
+            <div class="row gx-0" *ngFor="let week of weeks">
+                <div class="col flex-grow-1 p-0 m-0 text-center" *ngFor="let day of week">
+                    <div class="d-flex align-items-center justify-content-center w-100">
+                        <app-activity-calendar-days class="w-100 d-flex align-items-center justify-content-center fs-5"
+                        [numberOfDay]="day.day"
+                        (daySelected)="selectDate(day.day)"
+                            [ngClass]="{'selected-day': isSelected(day.day, day.month)}"></app-activity-calendar-days>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Acción a recoger -->
+    <div class="calendar-actions d-flex justify-content-between mt-3">
+        <button class="btn btn-secondary px-3 ms-3" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary px-3 me-3" (click)="onApply()">Apply</button>
+    </div>
+</div>
