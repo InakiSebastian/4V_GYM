@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <div class="row mt-4 d-flex gap-3">
+      <div class="col-lg-3 col-md-4 me-0">
+        <app-activity-calendar (dateSelected)="onDateSelected($event)"></app-activity-calendar>
+      </div>
+      <div class="col-lg-6 col-md-12 col-12">
+        <app-activity-datecarrousel 
+            [selectedDate]="selectedDate"
+            (daySelected)="onDateSelected($event)"
+        />
+        @if (activitiesListAsync$; as activities) {
+          @for (activity of activities; track $index) {
+            <app-activity
+              (addOrEditActivity)="onAddOrEditActivity($event)" 
+              [isFree]="!activity" 
+              [activityIcon]="activity?.activityType || ''"
+              [instructorsName]="getInstructorNames(activity)" 
+              [hourStart]="activity?.hourStart || ''" 
+              [hourEnd]="activity?.hourEnd || ''"
+              [activity]="activity"
+              class="w-100">
+            </app-activity>
+          }
+        }
+      </div>
+    </div>
+  </div>
+  
