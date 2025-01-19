@@ -9,6 +9,8 @@ import {
 import { InstructorService } from '../services/instructor.service';
 import { Instructor } from '../models/instructor.model';
 
+
+
 @Component({
   selector: 'app-form-edit-instructor',
   imports: [ReactiveFormsModule, CommonModule],
@@ -25,48 +27,48 @@ export class FormEditInstructorComponent {
   telfOrigin = input("");
   idOrigin= input("");
 
-  addForm = new FormGroup({
+  editForm = new FormGroup({
     name: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
     telf: new FormControl('', [Validators.required]),
   });
 
   ngOnInit(){
-    this.addForm.reset();
+    this.editForm.reset();
     this.addValues();
   }
 
  addValues(){
-    this.addForm.get('name')?.setValue(this.nameOrigin());
-    this.addForm.get('email')?.setValue(this.emailOrigin());
-    this.addForm.get('telf')?.setValue(this.telfOrigin());
+    this.editForm.get('name')?.setValue(this.nameOrigin());
+    this.editForm.get('email')?.setValue(this.emailOrigin());
+    this.editForm.get('telf')?.setValue(this.telfOrigin());
  }
 
   get email() {
-    return this.addForm.get('email');
+    return this.editForm.get('email');
   }
   get name() {
-    return this.addForm.get('name');
+    return this.editForm.get('name');
   }
   get telf() {
-    return this.addForm.get('telf');
+    return this.editForm.get('telf');
   }
 
-  sendForm() {
-    if (this.addForm.valid) {
+  sendFormUpdate() {
+    if (this.editForm.valid) {
       const instructorData = new Instructor(
-        0,
-        this.addForm.get('name')?.value || '',
-        this.addForm.get('email')?.value || '',
-        Number(this.addForm.get('telf')?.value) || 0
+        Number(this.idOrigin()),
+        this.editForm.get('name')?.value || '',
+        this.editForm.get('email')?.value || '',
+        Number(this.editForm.get('telf')?.value) || 0
       );
 
-      this.instructorService
-        .setInstructors(instructorData)
-        .subscribe((json) => {
-          alert(JSON.stringify(json));
-        });
-      this.addForm.reset();
+      this.instructorService.updateInstructors(instructorData).subscribe((json) => {
+        alert(instructorData.id + " " + instructorData.toString());
+      });
+      
+      this.editForm.reset();
+      
       this.instructorService.notifyUpdateContact(null);
     }
   }

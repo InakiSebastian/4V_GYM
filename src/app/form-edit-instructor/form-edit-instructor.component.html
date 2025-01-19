@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="addForm" (ngSubmit)="sendForm()">
+<form class="form" [formGroup]="editForm" (ngSubmit)="sendFormUpdate()">
     <div class="mb-3">
       <div class="text-center">
         <i class="bi bi-person-fill" style="font-size: 7rem; color: #d25b5b"></i>
@@ -48,7 +48,7 @@
       >
         <div *ngIf="telf?.hasError('required')">TELEFONO OBLIGATORIO</div>
         <!-- TODO: HACER QUE FUNCIONE ESTE IF -->
-        <div *ngIf="isNumber(addForm.get('telf')?.value)">TELEFONO INVALIDO</div>
+        <div *ngIf="isNumber(editForm.get('telf')?.value)">TELEFONO INVALIDO</div>
       </div>
     </div>
     <button type="submit" class="btn me-5">Añadir</button>

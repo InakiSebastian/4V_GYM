@@ -40,6 +40,10 @@ export class InstructorService {
 
   }
 
+  updateInstructors(instructorData: Instructor): Observable<Instructor> {
+    return this.http.put<Instructor>('https://678d41e7f067bf9e24e9ccd1.mockapi.io/4vgym/instructors/'+instructorData.id, instructorData);
+  }
+
   notifyUpdateContact(data: any) {
     this.updateSubject.next(data)
   }
