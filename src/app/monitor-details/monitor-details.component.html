@@ -5,7 +5,7 @@
     </button>
 
     
-    <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#modalAdd">
+    <button class="btn" type="button" data-bs-toggle="modal" [attr.data-bs-target]="modalId">
       <i class="bi bi-pencil-fill" style="font-size: 1.5rem; color: #D25B5B"></i>
     </button>
 
@@ -21,4 +21,4 @@
   </div>
 </div>
 
-<app-modal-instructors></app-modal-instructors>
+<app-modal-instructors [name]="monitorName()" [email]="monitorEmail()" [telf]="monitorPhone()" [id]="monitorId()"></app-modal-instructors>

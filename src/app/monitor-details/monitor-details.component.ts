@@ -11,6 +11,11 @@ export class MonitorDetailsComponent {
   monitorName = input('monitorName');
   monitorEmail = input('monitorEmail');
   monitorPhone = input('monitorPhone'); 
+  monitorId = input('default');
+  modalId :string = ""
+  ngOnInit(){
+  this.modalId = '#modalEdit' + this.monitorId();
+  }
 
 
   

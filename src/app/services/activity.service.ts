@@ -41,11 +41,11 @@ export class ActivityService {
 
   private generateInstructors(): Instructor[] {
     return [
-      new Instructor("Juanes Pérez", "juan@example.com", 123456789),
-      new Instructor("Juana María López", "maria@example.com", 987654321),
-      new Instructor("Juan Carlos Sánchez", "carlos@example.com", 111222333),
-      new Instructor("Juana González", "ana@example.com", 444555666),
-      new Instructor("Juan Fernández", "luis@example.com", 777888999),
+      new Instructor(0,"Juanes Pérez", "juan@example.com", 123456789),
+      new Instructor(0,"Juana María López", "maria@example.com", 987654321),
+      new Instructor(0,"Juan Carlos Sánchez", "carlos@example.com", 111222333),
+      new Instructor(0,"Juana González", "ana@example.com", 444555666),
+      new Instructor(0,"Juan Fernández", "luis@example.com", 777888999),
     ];
   }
 
