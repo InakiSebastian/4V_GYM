@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>{{ data.action === 'edit' ? 'Edit Activity' : 'Create Activity' }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="activityForm">
+    <!-- Nombre de la Actividad -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Activity´s name</mat-label>
+      <input matInput formControlName="activityName" placeholder="Example: Yoga, Spinning">
+    </mat-form-field>
+
+    <!-- Selección de Instructor -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Instructor</mat-label>
+      <mat-select formControlName="instructor">
+        <mat-option *ngFor="let instructor of instructorList" [value]="instructor">
+          {{ instructor }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Icono de la Actividad -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Icon (FontAwesome, Bootstrap...)</mat-label>
+      <input matInput formControlName="activityIcon" placeholder="Examp: fa-solid fa-dumbbell">
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="_matDialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveActivity()" [disabled]="activityForm.invalid">
+    Save
+  </button>
+</div>
