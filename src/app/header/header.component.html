@@ -1,14 +1,17 @@
-<header class="bg-light text-danger text-center py-4">
+<header class="bg-light text-danger text-center py-3">
     <div class="container-fluid">
-        <div class="row d-flex align-items-center">
-            <div class="col-1 d-flex justify-content-start">
-                <img src="mancuernasx128.png" alt="Weights" class="me-3 ms-2">
+        <div class="row align-items-center">
+            <div class="col-3 col-md-2 col-lg-1 d-flex justify-content-start">
+                <img src="mancuernasx128.png" alt="Weights" class="img-fluid ms-2 mancuernas">
             </div>
-            <div class="col-10 d-flex justify-content-center">
-                <h1 class="display-1">
-                    <span class="me-5 fw-bolder">{{organization | uppercase}}</span>
-                    <span class="me-5 fw-bolder">{{nameBusiness | uppercase}}</span>
+            <div class="col-9 col-md-10 col-lg-11 text-center">
+                <h1 class="fw-bolder text-uppercase d-none d-lg-block">
+                    <span class="me-3">{{ organization }}</span>
+                    <span class="me-3">{{ nameBusiness }}</span>
                 </h1>
+                <h2 class="fw-bold text-uppercase d-lg-none d-md-block d-sm-block">
+                    {{ organization }} {{ nameBusiness }}
+                </h2>
             </div>
         </div>
     </div>
