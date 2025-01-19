@@ -3,7 +3,7 @@ export class Instructor {
     email: string;
     telf: number;
 
-    constructor(name: String, email: string, telf: number) {
+    constructor(name: string, email: string, telf: number) {
         this.name = name;
         this.email = email;
         this.telf = telf;

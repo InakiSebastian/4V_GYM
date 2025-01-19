@@ -7,10 +7,11 @@ import { SearchBarComponent } from "./search-bar/search-bar.component";
 import { MonitorDetailsComponent } from "./monitor-details/monitor-details.component";
 import { CarouselComponent } from "./carousel/carousel.component";
 import { MonitorTabComponent } from "./monitor-tab/monitor-tab.component";
+import { ActivityMainComponent } from "./activity-main/activity-main.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TabSelectorComponent, TabComponent, HeaderComponent, SearchBarComponent, MonitorDetailsComponent, CarouselComponent, MonitorTabComponent],
+  imports: [RouterOutlet, TabSelectorComponent, TabComponent, HeaderComponent, SearchBarComponent, MonitorDetailsComponent, CarouselComponent, MonitorTabComponent, ActivityMainComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
