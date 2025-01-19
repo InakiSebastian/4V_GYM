@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Instructor } from '../models/instructor.model';
+import { Observable } from 'rxjs/internal/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import { Instructor } from '../models/instructor.model';
 export class InstructorService {
   private _instructors: Instructor[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this._instructors = this.generateInstructors();
    }
    private generateInstructors(): Instructor[] {
@@ -24,6 +26,11 @@ export class InstructorService {
   public getInstructors(): Instructor[] {
     return this._instructors;
   }
+
+  getAllInstructors():Observable<Instructor[]>{
+    return this.http.get<Instructor[]>('https://678d41e7f067bf9e24e9ccd1.mockapi.io/4vgym/instructors');
+  }
+  
 
    
 }
