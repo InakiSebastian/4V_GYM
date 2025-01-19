@@ -1,0 +1,24 @@
+<div id="cajaCard" class="card">
+  <div class="card-title d-flex  justify-content-between">
+    <button class="btn" type="button">
+      <i class="bi bi-trash-fill" style="font-size: 1.5rem; color: #D25B5B"></i>
+    </button>
+
+    
+    <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#modalAdd">
+      <i class="bi bi-pencil-fill" style="font-size: 1.5rem; color: #D25B5B"></i>
+    </button>
+
+  </div>
+  <div class="text-center p-0 m-0">
+    <i class="bi bi-person-fill" style="font-size: 5rem; color: #D25B5B"></i>
+  </div>
+
+  <div class="card-body text-center m-0 p-0">
+    <p class="card-text">{{ monitorName() }}</p>
+    <p class="card-text text-decoration-underline">{{ monitorEmail() }}</p>
+    <p class="card-text">{{ monitorPhone() }}</p>
+  </div>
+</div>
+
+<app-modal-instructors></app-modal-instructors>

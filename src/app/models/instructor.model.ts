@@ -1,5 +1,5 @@
 export class Instructor {
-    name: String;
+    name: string;
     email: string;
     telf: number;
 

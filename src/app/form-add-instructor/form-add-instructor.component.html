@@ -1,0 +1,58 @@
+<form class="form" [formGroup]="addForm" (ngSubmit)="sendForm()">
+  <div class="mb-3">
+    <div class="text-center">
+      <i class="bi bi-person-fill" style="font-size: 7rem; color: #d25b5b"></i>
+      <i class="bi bi-plus-lg" style="color: #d25b5b"></i>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      id=""
+      formControlName="name"
+      placeholder="NOMBRE"
+    />
+
+    <div
+      *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="name?.hasError('required')">NOMBRE OBLIGATORIO</div>
+    </div>
+
+    <input
+      type="email"
+      class="form-control mt-4"
+      id=""
+      formControlName="email"
+      placeholder="EMAIL"
+    />
+
+    <div
+      *ngIf="email?.invalid && (name?.dirty || email?.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="email?.hasError('required')">EMAIL OBLIGATORIO</div>
+      <div *ngIf="email?.hasError('email')">EMAIL INVALIDO</div>
+    </div>
+
+    <input
+      type="text"
+      class="form-control mt-4"
+      id=""
+      formControlName="telf"
+      placeholder="TELEFONO"
+    />
+
+    <div
+      *ngIf="telf?.invalid && (name?.dirty || telf?.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="telf?.hasError('required')">TELEFONO OBLIGATORIO</div>
+      <!-- TODO: HACER QUE FUNCIONE ESTE IF -->
+      <div *ngIf="isNumber(addForm.get('telf')?.value)">TELEFONO INVALIDO</div>
+    </div>
+  </div>
+  <button type="submit" class="btn me-5">Añadir</button>
+
+  <button type="button" class="btn" data-bs-dismiss="modal">CANCELAR</button>
+</form>

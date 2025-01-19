@@ -1,0 +1,24 @@
+#searchBar{
+    input{
+        background-color: #D9D9D9;
+    }
+    button{
+        background-color: #D9D9D9;
+        border:none;
+
+        i{
+            color: #D25B5B;
+        }
+        
+
+    }
+    border: 1px solid #D25B5B;
+    border-radius:7px;
+}
+
+// .form-control:focus {
+//     outline: none; /* Elimina el borde azul de enfoque */
+//     border-color: initial; /* Restablece el borde a su valor original */
+//     box-shadow: none; /* Elimina la sombra */
+//     border: none;
+//   }
