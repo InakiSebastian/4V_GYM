@@ -51,7 +51,6 @@ export class CarouselComponent {
   filterByText(fullListMonitor:Instructor[]): Instructor[]{
     
     var filterList = fullListMonitor.filter((instructor) => instructor.name.toLowerCase().includes(this.filterValue().toLowerCase()));
-    console.log(0);
     if (this.filterValue() == "") {
       this.error=false;
       return fullListMonitor;

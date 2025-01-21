@@ -21,6 +21,7 @@
     <div id="carouselExample" class="carousel slide" style="width: 80%">
       <div class="carousel-inner">
         @if (allInstructors$ | async; as instructors) { 
+         
           @for (instructorGroup of this.groupInstructors(filterByText(instructors)); track $index){
             @if(error && $index ==0){
               <h1 class="alert alert-danger">NO HAY MONITORES. MOSTRANDO TODA LA LISTA</h1>
@@ -42,9 +43,9 @@
                 </div>
               </div>
         
-      } 
+           } 
 
-  }
+        }
       </div>
     </div>
 
