@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { MonitorDetailsComponent } from "../monitor-details/monitor-details.component";
 import { InstructorService } from '../services/instructor.service';
 import { Instructor } from '../models/instructor.model';
 import { Observable } from 'rxjs/internal/Observable';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
-  imports: [MonitorDetailsComponent,AsyncPipe],
+  imports: [MonitorDetailsComponent,AsyncPipe,CommonModule],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss'
 })
 export class CarouselComponent {
   allInstructors$!: Observable<Instructor[]>;
   subscriptionUpdate: Subscription = new Subscription;
+  filterValue = input('bob');
+  error = false;
 
   constructor(private instructorService: InstructorService) {
    
@@ -22,9 +25,8 @@ export class CarouselComponent {
 
    ngOnInit(){
     this.allInstructors$ = this.instructorService.getAllInstructors();
-//TODO: ACTUALIZAR CUANDO SE HAGA UN CAMBIO. AHORA LO HACE, PERO POR ALGUNA RAZON SI QUITAS EL ALERT NO FUNCIONA. ENTIENDO QUE SERA PORQUE NO LE DA TIEMPO A HACER ALGO.
     this.subscriptionUpdate = this.instructorService.changesOnInstructors.subscribe(()=>{
-      alert('update');
+      alert("ACTUALIZANDO LISTA");
       this.allInstructors$ = this.instructorService.getAllInstructors();
     });
    }
@@ -38,6 +40,29 @@ export class CarouselComponent {
     }
     return result;
   
+  }
+
+  
+  
+  getError():boolean{
+    return this.error;
+  }
+ 
+  filterByText(fullListMonitor:Instructor[]): Instructor[]{
+    
+    var filterList = fullListMonitor.filter((instructor) => instructor.name.toLowerCase().includes(this.filterValue().toLowerCase()));
+    console.log(0);
+    if (this.filterValue() == "") {
+      this.error=false;
+      return fullListMonitor;
+    }
+
+    if (filterList.length == 0) {
+      this.error = true;
+      return fullListMonitor;
+    }
+    this.error=false;
+    return filterList;
   }
 
   ngOnDestroy() {

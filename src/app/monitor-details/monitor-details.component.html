@@ -1,11 +1,11 @@
 <div id="cajaCard" class="card">
   <div class="card-title d-flex  justify-content-between">
     <button class="btn" type="button">
-      <i class="bi bi-trash-fill" style="font-size: 1.5rem; color: #D25B5B"></i>
+      <i class="bi bi-trash-fill" (click)="deleteInstructor()" style="font-size: 1.5rem; color: #D25B5B"></i>
     </button>
 
     
-    <button class="btn" type="button" data-bs-toggle="modal" [attr.data-bs-target]="modalId">
+    <button class="btn" type="button"  data-bs-toggle="modal" [attr.data-bs-target]="modalId">
       <i class="bi bi-pencil-fill" style="font-size: 1.5rem; color: #D25B5B"></i>
     </button>
 

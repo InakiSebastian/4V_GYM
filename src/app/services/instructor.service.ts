@@ -44,6 +44,12 @@ export class InstructorService {
     return this.http.put<Instructor>('https://678d41e7f067bf9e24e9ccd1.mockapi.io/4vgym/instructors/'+instructorData.id, instructorData);
   }
 
+  deleteInstructors(id: number): Observable<Instructor> {
+    return this.http.delete<Instructor>('https://678d41e7f067bf9e24e9ccd1.mockapi.io/4vgym/instructors/'+id);
+  }
+  
+  
+
   notifyUpdateContact(data: any) {
     this.updateSubject.next(data)
   }

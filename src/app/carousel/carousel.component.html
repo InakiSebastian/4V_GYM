@@ -4,59 +4,62 @@
     <!-- class="carousel-control-prev" -->
     <div class="">
       <button
-      class="btn"
+        class="btn"
         type="button"
         data-bs-target="#carouselExample"
         data-bs-slide="prev"
       >
         <i
-          class="bi bi-chevron-double-left "
-          style="font-size: 5rem; color: #D25B5B"
+          class="bi bi-chevron-double-left"
+          style="font-size: 5rem; color: #d25b5b"
         ></i>
         <span class="visually-hidden">Previous</span>
       </button>
     </div>
-   
 
     <!-- Carrusel -->
     <div id="carouselExample" class="carousel slide" style="width: 80%">
       <div class="carousel-inner">
-        
-        @if (allInstructors$ | async; as instructors) {
-          @for (instructorGroup of this.groupInstructors(instructors); track $index){ 
-            <div class="carousel-item" [class.active]="$index === 0">
+        @if (allInstructors$ | async; as instructors) { 
+          @for (instructorGroup of this.groupInstructors(filterByText(instructors)); track $index){
+            @if(error && $index ==0){
+              <h1 class="alert alert-danger">NO HAY MONITORES. MOSTRANDO TODA LA LISTA</h1>
+            }
+              <div class="carousel-item" [class.active]="$index === 0">
                 <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center">
-                        @for (instructor1 of instructorGroup; track $index){
-                            <div>
-                                <app-monitor-details
-                                    [monitorEmail]="instructor1.email"
-                                    [monitorName]="instructor1.name "
-                                    [monitorPhone]="instructor1.telf + ''"
-                                    [monitorId]="instructor1.id + ''" 
-                                ></app-monitor-details>
-                            </div>
-                        }
+                  <div class="d-flex justify-content-between align-items-center">
+                    @for (instructor1 of instructorGroup; track $index){
+                    <div>
+                      <app-monitor-details
+                        [monitorEmail]="instructor1.email"
+                        [monitorName]="instructor1.name"
+                        [monitorPhone]="instructor1.telf + ''"
+                        [monitorId]="instructor1.id + ''"
+                      ></app-monitor-details>
                     </div>
+                    }
+                  </div>
                 </div>
-            </div>
-        }
-      }
+              </div>
+        
+      } 
+
+  }
+      </div>
     </div>
-  </div>
 
     <!-- Botón de navegación siguiente -->
     <!-- class="carousel-control-next" -->
     <div id="botonDerecha" class="">
       <button
-      class="btn"
+        class="btn"
         type="button"
         data-bs-target="#carouselExample"
         data-bs-slide="next"
       >
         <i
           class="bi bi-chevron-double-right"
-          style="font-size: 5rem; color: #D25B5B"
+          style="font-size: 5rem; color: #d25b5b"
         ></i>
         <span class="visually-hidden">Next</span>
       </button>

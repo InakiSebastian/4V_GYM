@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { ModalInstructorsComponent } from "../modal-instructors/modal-instructors.component";
+import { InstructorService } from '../services/instructor.service';
 
 @Component({
   selector: 'app-monitor-details',
@@ -8,6 +9,9 @@ import { ModalInstructorsComponent } from "../modal-instructors/modal-instructor
   styleUrl: './monitor-details.component.scss'
 })
 export class MonitorDetailsComponent {
+
+  constructor(private instructorService: InstructorService) { }
+
   monitorName = input('monitorName');
   monitorEmail = input('monitorEmail');
   monitorPhone = input('monitorPhone'); 
@@ -15,6 +19,14 @@ export class MonitorDetailsComponent {
   modalId :string = ""
   ngOnInit(){
   this.modalId = '#modalEdit' + this.monitorId();
+  }
+
+  deleteInstructor(){
+    this.instructorService.deleteInstructors(Number(this.monitorId())).subscribe((data)=>{
+      alert("Monitor eliminado");
+      this.instructorService.notifyUpdateContact(data);
+
+    })
   }
 
 
