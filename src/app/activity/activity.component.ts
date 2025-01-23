@@ -11,14 +11,16 @@ import { ActivityService } from '../services/activity.service';
 })
 export class ActivityComponent {
   @Input() isFree: boolean = false;
-  @Input() hourStart: string = '10:30';
-  @Input() hourEnd: string = '12:00';
-  @Input() instructorsName: String[] = ['Miguel Goyena'];
-  @Input() activityIcon: string = '';
   @Input() activity: Activity | null = null;
+  instructorNames: string[] = [];
   @Output() addOrEditActivity: EventEmitter<{ action: string, activity: Activity | null }> = new EventEmitter();
 
   constructor(private activityService: ActivityService){}
+
+  ngOnInit(){
+  this.instructorNames = this.getInstructorNames(this.activity);
+  console.log(this.instructorNames);
+  }
 
   onAddActivity(action: string): void {
     this.addOrEditActivity.emit({ action, activity: this.activity }); // Concreción del Output
@@ -26,8 +28,17 @@ export class ActivityComponent {
 
   onDeleteActivity(): void {
     if (this.activity) {
-      this.activityService.deleteActivity(this.activity);
-      alert(`activity deleted`);
+      this.activityService.deleteActivity(this.activity).subscribe(() => {
+        alert('Actividad eliminada');
+      });
     }
   }
+
+ private getInstructorNames(activity: Activity | null): string[] {
+    if (activity && Array.isArray(activity.instructorList)) {
+      return activity.instructorList.map(instructor => instructor.name);
+    }
+    return [];
+  }
+  
 }
