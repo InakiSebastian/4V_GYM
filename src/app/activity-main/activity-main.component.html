@@ -8,20 +8,17 @@
             [selectedDate]="selectedDate"
             (daySelected)="onDateSelected($event)"
         />
-        @if (activitiesListAsync$; as activities) {
-          @for (activity of activities; track $index) {
+        <div *ngIf="activitiesListAsync$ | async as activities">
+          <ng-container *ngFor="let index of [].constructor(numberActivities); let i = index">
             <app-activity
               (addOrEditActivity)="onAddOrEditActivity($event)" 
-              [isFree]="!activity" 
-              [activityIcon]="activity?.activityType || ''"
-              [instructorsName]="getInstructorNames(activity)" 
-              [hourStart]="activity?.hourStart || ''" 
-              [hourEnd]="activity?.hourEnd || ''"
-              [activity]="activity"
+              [isFree]="!activities[i]" 
+              [activity]="activities[i] || null"
               class="w-100">
             </app-activity>
-          }
-        }
+          </ng-container>
+        </div>
+        
       </div>
     </div>
   </div>
