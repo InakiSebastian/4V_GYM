@@ -12,16 +12,17 @@
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Instructor</mat-label>
       <mat-select formControlName="instructor">
-        <mat-option *ngFor="let instructor of instructorList" [value]="instructor">
-          {{ instructor }}
+        <mat-option *ngFor="let instructor of (instructorList | async)" [value]="instructor">
+          {{ instructor.name }}
         </mat-option>
+        
       </mat-select>
     </mat-form-field>
 
     <!-- Icono de la Actividad -->
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Icon (FontAwesome, Bootstrap...)</mat-label>
-      <input matInput formControlName="activityIcon" placeholder="Examp: fa-solid fa-dumbbell">
+      <input matInput formControlName="activityIcon" placeholder="Examp: fa-solid fa-2xl fa-volleyball">
     </mat-form-field>
   </form>
 </div>

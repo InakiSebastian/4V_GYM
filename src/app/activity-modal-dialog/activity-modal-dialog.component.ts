@@ -9,6 +9,7 @@ import { InstructorService } from '../services/instructor.service';
 import { Instructor } from '../models/instructor.model';
 import { Activity } from '../models/activity.model';
 import { ActivityService } from '../services/activity.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-activity-modal-dialog',
@@ -25,7 +26,7 @@ import { ActivityService } from '../services/activity.service';
 })
 export class ActivityModalDialogComponent implements OnInit {
   activityForm: FormGroup;
-  instructorList: String[] = [];
+  instructorList!: Observable<Instructor[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -35,15 +36,15 @@ export class ActivityModalDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { activity: Activity | null; action: 'edit' | 'create'; date: Date }
   ) {
     this.activityForm = this.fb.group({
-      activityName: [data.activity?.activityName || '', Validators.required],
-      activityIcon: [data.activity?.activityType || '', Validators.required],
-      instructor: [data.activity?.instructorList[0]?.name || '', Validators.required],
+      activityName: [data.activity?.name || '', Validators.required],
+      activityIcon: [data.activity?.icon || '', Validators.required],
+      instructor: [(data.activity?.instructorList?.length ? data.activity.instructorList[0].name : ''), Validators.required],
       activityDate: [data.date || new Date(), Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.instructorList = this.instructorService.getInstructors().map(instr => instr.name);
+    this.instructorList = this.instructorService.getAllInstructors();
   }
 
   saveActivity(): void {
