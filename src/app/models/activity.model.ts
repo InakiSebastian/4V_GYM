@@ -1,24 +1,25 @@
 import { Instructor } from "./instructor.model";
 
 export class Activity {
-    activityName: string;
-    activityType: string;
-    activityDate: Date;
-    instructorList: Instructor[];
+    name: string;
+    icon: string;
+    date: Date;
+    instructorList?: Instructor[];
     hourStart: string;
     hourEnd: string;
 
-    constructor(activityName: string, activityType: string,activityDate: Date, instructorList: Instructor[]) {
-        this.activityName = activityName;
-        this.activityType = activityType;
-        this.activityDate = activityDate;
+    constructor(activityName: string, activityType: string, date: number | Date, instructorList: Instructor[]) {
+        this.name = activityName;
+        this.icon = activityType;
+        this.date = (date instanceof Date)? date : new Date(date * 1000);
         this.instructorList = instructorList;
-        this.hourStart = this.formatTime(activityDate.getHours(), activityDate.getMinutes());
-        this.hourEnd = this.calculateEndTime(activityDate);
+        this.hourStart = this.formatTime(this.date.getHours(), this.date.getMinutes());
+        this.hourEnd = this.calculateEndTime(this.date);
     }
+    
 
     toString() {
-        return `Activity: ${this.activityName} of type: ${this.activityType} with instructors: ${this.instructorList}`;
+        return `Activity: ${this.name} of type: ${this.icon} with instructors: ${this.instructorList}`;
     }
     
     private formatTime(hours: number, minutes: number): string {
@@ -26,14 +27,11 @@ export class Activity {
     }
 
     private calculateEndTime(date: Date): string {
-        let endHours = date.getHours() + 1;
-        let endMinutes = date.getMinutes() + 30;
-
-        if (endMinutes >= 60) {
-            endMinutes -= 60;
-            endHours += 1;
-        }
-
+        const newDate = new Date(date.getTime());
+        newDate.setTime(newDate.getTime() + (1 * 60 * 60 * 1000) + (30 * 60 * 1000)); // Suma de 1,5 horas en milisegundos
+        const endHours = newDate.getHours();
+        const endMinutes = newDate.getMinutes();
         return this.formatTime(endHours, endMinutes);
     }
+    
 }
