@@ -1,7 +1,7 @@
 <div
   class="modal fade"
-  id="modalEditar"
-  data-bs-backdrop="static"
+  [id]="modalId"
+  data-bs-backdrop="false" 
   data-bs-keyboard="false"
   tabindex="-1"
   aria-labelledby="staticBackdropLabel"
@@ -11,13 +11,8 @@
     <div class="modal-content">
       <div class="modal-body">
         <div class="d-flex justify-content-center gap-3">
-          <button type="button" class="btn" data-bs-dismiss="modal">
-            ACEPTAR
-          </button>
-          <button type="button" class="btn" data-bs-dismiss="modal">
-            CANCELAR
-          </button>
-        </div>
+          <app-form-edit-instructor [nameOrigin]="name()" [emailOrigin]="email()" [idOrigin]="id()" [telfOrigin]="telf()"></app-form-edit-instructor> 
+          </div>
       </div>
     </div>
   </div>

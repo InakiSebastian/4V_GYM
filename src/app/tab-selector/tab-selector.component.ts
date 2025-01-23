@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { TabComponent } from "../tab/tab.component";
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-tab-selector',
-  imports: [TabComponent, RouterLink],
+  imports: [TabComponent, RouterLink,RouterLinkActive],
   templateUrl: './tab-selector.component.html',
   styleUrl: './tab-selector.component.scss'
 })
