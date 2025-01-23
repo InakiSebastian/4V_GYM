@@ -117,3 +117,4 @@ private loadActivities(): void {
     && dateActivity.getMonth() === date.getMonth() 
     && dateActivity.getDate() === date.getDate();
   }
+}
