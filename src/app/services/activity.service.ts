@@ -30,8 +30,6 @@ export class ActivityService {
     );
 }
 
-  
-
 private loadActivities(): void {
   this.http.get<Activity[]>(this.apiUrl).pipe(
     catchError(error => {
@@ -45,8 +43,6 @@ private loadActivities(): void {
     this.activitiesSubject.next(activities);
   });
 }
-
-
 
   addActivity(activity: Activity): Observable<Activity> {
     return this.http.post<Activity>(this.apiUrl, activity).pipe(
