@@ -28,7 +28,7 @@ export class Activity {
 
     private calculateEndTime(date: Date): string {
         const newDate = new Date(date.getTime());
-        newDate.setTime(newDate.getTime() + (1 * 60 * 60 * 1000) + (30 * 60 * 1000)); // Suma de 1,5 horas en milisegundos
+        newDate.setTime(newDate.getTime() + (1 * 60 * 60 * 1000) + (30 * 60 * 1000)); // SUMA de 1,5 horas en milisegundos
         const endHours = newDate.getHours();
         const endMinutes = newDate.getMinutes();
         return this.formatTime(endHours, endMinutes);
