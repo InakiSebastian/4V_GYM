@@ -12,6 +12,8 @@
           <ng-container *ngFor="let index of [].constructor(numberActivities); let i = index">
             <app-activity
               (addOrEditActivity)="onAddOrEditActivity($event)" 
+              [activityStart]="hoursActivities[i][0]"
+              [activityEnd]="hoursActivities[i][1]"
               [isFree]="!activities[i]" 
               [activity]="activities[i] || null"
               class="w-100">

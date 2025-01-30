@@ -21,6 +21,7 @@ export class ActivityMainComponent {
   activitiesListAsync$!: Observable<Activity[]>;
   selectedDate: Date | null = null;
   numberActivities: number = 3;
+  hoursActivities: any = [["9:00", "10:30"], ["13:30", "15:00"], ["17:30", "19:00"]];
 
   constructor(private activityService: ActivityService, private _matDialog: MatDialog) {}
 
@@ -47,7 +48,7 @@ export class ActivityMainComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El modal fue cerrado');
+      console.log('Modal cerrado');
     });
   }  
  

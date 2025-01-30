@@ -1,22 +1,17 @@
 <section class="container mt-3">
-    @if (!activity){
-        <div class="row align-items-center">
-            <div class="col-2 text-center">
-                <strong>{{"10:30"}}<br>{{"12:00"}}</strong>
-            </div>
+    <div class="row align-items-center">
+        <div class="col-2 text-center">
+            <strong>{{activityStart}}<br>{{activityEnd}}</strong>
+        </div>
+            @if (!activity){
             <div class="col-10 bg-success text-white d-flex flex-column align-items-center">
               <button class="btn btn-link text-danger align-self-end" (click)="onAddActivity('create')">
                 <i class="fa-solid fa-plus fa-2xl text-danger pt-3"></i>
               </button>
                 <h5 class="display-5 text-center m-0 pb-3 flex-grow-1 d-flex align-items-center">FREE</h5>
             </div>
-        </div>
-    }
-    @else {
-        <div class="row align-items-center">
-            <div class="col-2 text-center">
-                <strong>{{activity?.hourStart}}<br>{{activity?.hourEnd}}</strong>
-            </div>
+                    }
+            @else {
             <div class="col-10 bg-light d-flex align-items-center justify-content-between py-3">
                 <div class="d-flex gap-3 ms-0">
                   @if (instructorNames.length > 0){
@@ -34,12 +29,12 @@
                     </div>
                   }
                 </div>
-                <i [ngClass]="activity?.icon" class="text-danger"></i>
+                <i [ngClass]="icon" class="fa-2xl text-danger ms-5"></i>
                 <div class="d-flex flex-column align-items-end">
                     <button class="btn btn-link text-danger" (click)="onAddActivity('edit')"><i class="fa-solid fa-pen fa-lg"></i></button>
                     <button class="btn btn-link text-danger" (click)="onDeleteActivity()"><i class="fa-solid fa-trash fa-lg"></i></button>
                 </div>
             </div>
+            }
         </div>
-    }
 </section>
