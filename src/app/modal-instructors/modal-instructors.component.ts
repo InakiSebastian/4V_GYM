@@ -15,7 +15,6 @@ export class ModalInstructorsComponent {
   modalId :string = ""
   ngOnInit(){
     this.modalId = "modalEdit" + this.id();
-
   }
 
 

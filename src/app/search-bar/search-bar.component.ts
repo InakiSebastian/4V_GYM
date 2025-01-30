@@ -3,6 +3,7 @@ import { MonitorTabComponent } from '../monitor-tab/monitor-tab.component';
 import { FormControl , ReactiveFormsModule} from '@angular/forms';
 
 
+
 @Component({
   selector: 'app-search-bar',
   imports: [ ReactiveFormsModule],
