@@ -1,35 +1,55 @@
-<h1 mat-dialog-title>{{ data.action === 'edit' ? 'Edit Activity' : 'Create Activity' }}</h1>
+<div #modalElement 
+     class="modal fade" 
+     id="activityModal" 
+     tabindex="-1" 
+     aria-labelledby="activityModalLabel" 
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-centered">
+        <h5 class="modal-title text-danger" id="activityModalLabel">
+          {{ action === 'edit' ? 'Editar Actividad' : 'Crear Actividad' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="activityForm">
+          <div class="mb-3">
+            <label for="activityName" class="form-label">Tipo de Actividad</label>
+            <select class="form-select bg-light" id="activityName" formControlName="activityName">
+              <option *ngFor="let name of activityNames" [value]="name">
+                {{ name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="monitor1" class="form-label">Monitor 1</label>
+            <select class="form-select bg-light" id="monitor1" formControlName="monitor1">
+              <option *ngFor="let instructor of (instructorList$ | async)" [value]="instructor.name">
+                {{ instructor.name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="monitorN" class="form-label">Monitor N</label>
+            <select class="form-select bg-light" id="monitorN" formControlName="monitorN">
+              <option *ngFor="let instructor of (instructorList$ | async)" [value]="instructor.name">
+                {{ instructor.name }}
+              </option>
+            </select>
+          </div>
 
-<div mat-dialog-content>
-  <form [formGroup]="activityForm">
-    <!-- Nombre de la Actividad -->
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Activity´s name</mat-label>
-      <input matInput formControlName="activityName" placeholder="Example: Yoga, Spinning">
-    </mat-form-field>
-
-    <!-- Selección de Instructor -->
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Instructor</mat-label>
-      <mat-select formControlName="instructor">
-        <mat-option *ngFor="let instructor of (instructorList | async)" [value]="instructor">
-          {{ instructor.name }}
-        </mat-option>
-        
-      </mat-select>
-    </mat-form-field>
-
-    <!-- Icono de la Actividad -->
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Icon (FontAwesome, Bootstrap...)</mat-label>
-      <input matInput formControlName="activityIcon" placeholder="Examp: fa-solid fa-2xl fa-volleyball">
-    </mat-form-field>
-  </form>
-</div>
-
-<div mat-dialog-actions align="end">
-  <button mat-button (click)="_matDialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="saveActivity()" [disabled]="activityForm.invalid">
-    Save
-  </button>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-danger flex-grow-1 px-3" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-danger flex-grow-1 px-3" (click)="saveActivity()" [disabled]="activityForm.invalid">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
