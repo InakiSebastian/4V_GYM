@@ -35,7 +35,9 @@ export class FormAddInstructorComponent {
       const instructorData = new Instructor(0,this.addForm.get('name')?.value || '',this.addForm.get('email')?.value || '',Number(this.addForm.get('telf')?.value)|| 0);
 
       this.instructorService.setInstructors(instructorData).subscribe(json =>{
-        alert(JSON.stringify(json));
+
+        alert("Monitor añadido");
+        
       });
       this.addForm.reset();
       this.instructorService.notifyUpdateContact(null);
@@ -43,8 +45,9 @@ export class FormAddInstructorComponent {
     }
   }
 
-  isNumber(value: any):boolean{
-    return isNaN(value);
+  isNumber(value: any): boolean {
+    var resultado = !isNaN(parseFloat(value)) && isFinite(value);
+    return resultado;
   }
 
 
