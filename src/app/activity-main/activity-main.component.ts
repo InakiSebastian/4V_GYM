@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/internal/Observable';
-import { MatDialog } from '@angular/material/dialog';
 import {AsyncPipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ActivityService } from '../services/activity.service';
 import { ActivityCalendarComponent } from '../activity-calendar/activity-calendar.component';
 import { ActivityDatecarrouselComponent } from '../activity-datecarrousel/activity-datecarrousel.component';
@@ -12,20 +12,28 @@ import { ActivityModalDialogComponent } from '../activity-modal-dialog/activity-
 
 @Component({
   selector: 'app-activity-main',
-  imports: [ActivityCalendarComponent, ActivityDatecarrouselComponent, ActivityComponent, AsyncPipe, CommonModule],
+  imports: [ActivityCalendarComponent, 
+    ActivityDatecarrouselComponent, 
+    ActivityComponent, 
+    AsyncPipe, 
+    CommonModule, 
+    ActivityModalDialogComponent, 
+    ReactiveFormsModule],
   templateUrl: './activity-main.component.html',
   styleUrl: './activity-main.component.scss'
 })
 export class ActivityMainComponent {
-  
+  @ViewChild(ActivityModalDialogComponent)
+  private modalChild!: ActivityModalDialogComponent;
+
   activitiesListAsync$!: Observable<Activity[]>;
   selectedDate: Date | null = null;
   numberActivities: number = 3;
   hoursActivities: any = [["9:00", "10:30"], ["13:30", "15:00"], ["17:30", "19:00"]];
 
-  constructor(private activityService: ActivityService, private _matDialog: MatDialog) {}
+  constructor(private activityService: ActivityService) {}
 
-  ngOnInit() {}
+
 
   // Método que recibe la fecha desde el calendario
   onDateSelected(date: Date): void {
@@ -37,19 +45,17 @@ export class ActivityMainComponent {
   });
   }
 
-   onAddOrEditActivity(event: { action: string, activity: Activity | null }): void {
+  onAddOrEditActivity(event: { action: string, activity: Activity | null }): void {
     this.openModal(event.action, event.activity);
   }
 
-  // Método que abre el modal pasando la acción (crear o editar) y la actividad (si existe)
-  openModal(action: string, activity: Activity | null): void {
-    const dialogRef = this._matDialog.open(ActivityModalDialogComponent, {
-      data: { action, activity }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Modal cerrado');
-    });
-  }  
+  openModal(action: string, activity: Activity | null): void {
+    this.modalChild.action = action as ('create'|'edit');
+    this.modalChild.activity = activity;
+    this.modalChild.date = this.selectedDate || new Date();
+    this.modalChild.initializeForm();
+    this.modalChild.show();
+  } 
  
 }

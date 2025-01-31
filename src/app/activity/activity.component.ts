@@ -32,7 +32,7 @@ export class ActivityComponent {
   }
 
   onAddActivity(action: string): void {
-    this.addOrEditActivity.emit({ action, activity: this.activity }); // Concreción del Output recibido por el Modal de material A.
+    this.addOrEditActivity.emit({ action, activity: this.activity }); // Concreción del Output hacia Main-Activity.
   }
 
   onDeleteActivity(): void {
