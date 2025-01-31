@@ -90,25 +90,43 @@ export class ActivityModalDialogComponent implements OnInit {
     if (this.activityForm.invalid) {
       return;
     }
+  
     const formValues = this.activityForm.value;
     const allInstructors = this.instructorService.getInstructors(); 
     const selectedInstructors = allInstructors.filter(instructor =>
       [formValues.monitor1, formValues.monitorN].includes(instructor.name)
     );
-
+  
     const newActivity = new Activity(
       formValues.activityName,
       formValues.activityName,
       this.date || new Date(),
       selectedInstructors
     );
+  
     if (this.action === 'create') {
-      this.activityService.addActivity(newActivity);
+      this.activityService.addActivity(newActivity).subscribe({
+        next: (createdActivity) => {
+          console.log('Actividad creada:', createdActivity);
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error al crear la actividad:', error);
+        }
+      });
     } else if (this.action === 'edit' && this.activity) {
-      this.activityService.updateActivity(newActivity);
+      this.activityService.updateActivity(newActivity).subscribe({
+        next: (updatedActivity) => {
+          console.log('Actividad actualizada:', updatedActivity);
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Error al actualizar la actividad:', error);
+        }
+      });
     }
-    this.closeModal();
   }
+  
 
 
 }
