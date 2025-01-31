@@ -38,8 +38,14 @@ private loadActivities(): void {
     })
   ).subscribe(apiActivities => {
     const activities = apiActivities.map(activity => 
-      new Activity(activity.name, activity.icon, activity.date, activity.instructorList || [])
+      new Activity(
+        activity.name,
+        activity.icon,
+        new Date(activity.date),
+        activity.instructorList || []
+      )
     );
+    
     this.activitiesSubject.next(activities);
   });
 }
@@ -111,10 +117,10 @@ private loadActivities(): void {
     );
   }
 
-  private isEqualDay(activity: Activity, date: Date): boolean{
-    let dateActivity: Date = activity.date;
-    return dateActivity.getFullYear() === date.getFullYear() 
-    && dateActivity.getMonth() === date.getMonth() 
-    && dateActivity.getDate() === date.getDate();
+  private isEqualDay(activity: Activity, date: Date): boolean {
+    const dateActivity = new Date(activity.date);
+    return dateActivity.getFullYear() === date.getFullYear() &&
+      dateActivity.getMonth() === date.getMonth() &&
+      dateActivity.getDate() === date.getDate();
   }
 }
