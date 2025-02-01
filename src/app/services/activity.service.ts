@@ -41,8 +41,9 @@ private loadActivities(): void {
       new Activity(
         activity.name,
         activity.icon,
-        new Date(activity.date),
-        activity.instructorList || []
+        new Date(activity.dateStart),new Date(activity.dateEnd),
+        activity.instructors || [],
+        activity.id
       )
     );
     
@@ -64,21 +65,18 @@ private loadActivities(): void {
   }
 
   updateActivity(updatedActivity: Activity): Observable<Activity> {
-    return this.activities$.pipe(
-      map(activities => {
-        const index = activities.findIndex(activity =>
-          new Date(activity.date).getTime() === new Date(updatedActivity.date).getTime()
+    if (!updatedActivity.id) {
+      throw new Error('La actividad no tiene ID asignado.');
+    }
+
+    const url = `${this.apiUrl}/${updatedActivity.id}`;
+    return this.http.put<Activity>(url, updatedActivity).pipe(
+      tap(() => {
+        const currentActivities = this.activitiesSubject.getValue();
+        const updatedActivities = currentActivities.map(activity =>
+          activity.id === updatedActivity.id ? updatedActivity : activity
         );
-
-        if (index === -1) {
-          throw new Error('Actividad no encontrada.');
-        }
-
-        const updatedActivities = [...activities];
-        updatedActivities[index] = updatedActivity;
-
         this.activitiesSubject.next(updatedActivities);
-        return updatedActivity;
       }),
       catchError(error => {
         console.error('Error al actualizar actividad:', error);
@@ -87,16 +85,16 @@ private loadActivities(): void {
     );
   }
 
-
   deleteActivity(activityToDelete: Activity): Observable<void> {
-    return this.activities$.pipe(
-      map(activities => {
-        // Filtrar para excluir la actividad a eliminar
-        const updatedActivities = activities.filter(activity =>
-          new Date(activity.date).getTime() !== new Date(activityToDelete.date).getTime()
-        );
-  
-        // Actualizar la lista de actividades
+    if (!activityToDelete.id) {
+      throw new Error('La actividad no tiene ID asignado.');
+    }
+
+    const url = `${this.apiUrl}/${activityToDelete.id}`;
+    return this.http.delete<void>(url).pipe(
+      tap(() => {
+        const currentActivities = this.activitiesSubject.getValue();
+        const updatedActivities = currentActivities.filter(activity => activity.id !== activityToDelete.id);
         this.activitiesSubject.next(updatedActivities);
       }),
       catchError(error => {
@@ -106,21 +104,24 @@ private loadActivities(): void {
     );
   }
 
-
-  selectActivity(date: Date): Observable<Activity | undefined> {
+  selectActivity(id: number): Observable<Activity | undefined> {
     return this.activities$.pipe(
       map(activities =>
-        activities.find(activity =>
-          new Date(activity.date).getTime() === date.getTime()
-        )
+        activities.find(activity => activity.id === id)
       )
     );
   }
 
   private isEqualDay(activity: Activity, date: Date): boolean {
-    const dateActivity = new Date(activity.date);
-    return dateActivity.getFullYear() === date.getFullYear() &&
-      dateActivity.getMonth() === date.getMonth() &&
-      dateActivity.getDate() === date.getDate();
+    const dateSelectedStart = new Date(date);
+    dateSelectedStart.setHours(0, 0, 0, 0);
+    const dateSelectedEnd = new Date(date);
+    dateSelectedEnd.setHours(23, 59, 59, 999);
+    
+    const dateActivityStart = new Date(activity.dateStart);
+    const dateActivityEnd = new Date(activity.dateEnd);
+    return dateActivityStart >= dateSelectedStart && dateActivityEnd <= dateSelectedEnd;
   }
+
+  
 }

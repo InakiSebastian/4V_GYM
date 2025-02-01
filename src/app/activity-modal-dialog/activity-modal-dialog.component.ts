@@ -26,11 +26,14 @@ export class ActivityModalDialogComponent implements OnInit {
   @Input() action: 'create' | 'edit' = 'create';
   @Input() activity: Activity | null = null;
   @Input() date: Date | null = null;
+  @Input() hourStart: string = "09:30";
+  @Input() hourEnd: string = "11:00" ;
 
   activityForm!: FormGroup;
   instructorList$!: Observable<Instructor[]>;
   activityNames: string[] = ['Yoga', 'Spinning', 'Natación', 'Pilates'];
   private bootstrapModal?: bootstrap.Modal;
+
 
   constructor(
     private fb: FormBuilder,
@@ -55,8 +58,8 @@ export class ActivityModalDialogComponent implements OnInit {
     if (this.activity && this.action === 'edit') {
       this.activityForm.patchValue({
         activityName: this.activity.name || '',
-        monitor1: this.activity.instructorList?.[0]?.name || '',
-        monitorN: this.activity.instructorList?.[1]?.name || ''
+        monitor1: this.activity.instructors?.[0] || '',
+        monitorN: this.activity.instructors?.[1] || ''
       });
     } else {
       this.activityForm.reset({
@@ -99,9 +102,10 @@ export class ActivityModalDialogComponent implements OnInit {
   
     const newActivity = new Activity(
       formValues.activityName,
-      formValues.activityName,
-      this.date || new Date(),
-      selectedInstructors
+      "",
+      this.buildStartEndDates(this.hourStart),
+      this.buildStartEndDates(this.hourEnd),
+      selectedInstructors.map(instructor => instructor.name)
     );
   
     if (this.action === 'create') {
@@ -127,6 +131,21 @@ export class ActivityModalDialogComponent implements OnInit {
     }
   }
   
+  private buildStartEndDates(hourToSet: string): Date {
+    if (!this.date) {
+        throw new Error("La fecha base no está definida.");
+    }
+
+    let datePerHour = new Date(this.date);
+    const timeParts = hourToSet.split(":").map(Number); // ["09", "00"] -> [9, 0]
+    if (timeParts.length !== 2 || isNaN(timeParts[0]) || isNaN(timeParts[1])) {
+        throw new Error("Formato de hora incorrecto. Debe ser HH:mm");
+    }
+
+    datePerHour.setHours(timeParts[0], timeParts[1], 0, 0);
+    return datePerHour;
+}
+
 
 
 }
