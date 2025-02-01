@@ -20,7 +20,7 @@ export class ActivityComponent {
   }
 
   ngOnInit(){
-  this.instructorNames = this.getInstructorNames(this.activity);
+  this.instructorNames = (this.activity && this.activity.instructors)? this.activity.instructors : ["No name"];
   console.log("Instructores: " +this.instructorNames);
   }
 
@@ -36,11 +36,11 @@ export class ActivityComponent {
     }
   }
 
- private getInstructorNames(activity: Activity | null): string[] {
+ /*private getInstructorNames(activity: Activity | null): string[] {
     if (activity && Array.isArray(activity.instructors)) {
       return activity.instructors;
     }
     return [];
   }
-
+*/
 }

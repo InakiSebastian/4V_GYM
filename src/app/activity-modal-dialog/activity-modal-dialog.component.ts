@@ -26,11 +26,12 @@ export class ActivityModalDialogComponent implements OnInit {
   @Input() action: 'create' | 'edit' = 'create';
   @Input() activity: Activity | null = null;
   @Input() date: Date | null = null;
-  @Input() hourStart: string = "09:30";
+  @Input() hourStart: string = "09:30"; //Default. Gets overwritten.
   @Input() hourEnd: string = "11:00" ;
 
   activityForm!: FormGroup;
   instructorList$!: Observable<Instructor[]>;
+  instructorNames : string[] = [];
   activityNames: string[] = ['Yoga', 'Spinning', 'Natación', 'Pilates'];
   private bootstrapModal?: bootstrap.Modal;
 
@@ -49,6 +50,9 @@ export class ActivityModalDialogComponent implements OnInit {
     });
 
     this.instructorList$ = this.instructorService.getAllInstructors();
+    this.instructorList$.subscribe(instructors=> {
+      this.instructorNames = instructors.map(instructor => instructor.name)
+    });
   }
 
   /**
@@ -95,9 +99,8 @@ export class ActivityModalDialogComponent implements OnInit {
     }
   
     const formValues = this.activityForm.value;
-    const allInstructors = this.instructorService.getInstructors(); 
-    const selectedInstructors = allInstructors.filter(instructor =>
-      [formValues.monitor1, formValues.monitorN].includes(instructor.name)
+    const selectedInstructors = this.instructorNames.filter(name =>
+      [formValues.monitor1, formValues.monitorN].includes(name)
     );
   
     const newActivity = new Activity(
@@ -105,8 +108,7 @@ export class ActivityModalDialogComponent implements OnInit {
       "",
       this.buildStartEndDates(this.hourStart),
       this.buildStartEndDates(this.hourEnd),
-      selectedInstructors.map(instructor => instructor.name)
-    );
+      selectedInstructors);
   
     if (this.action === 'create') {
       this.activityService.addActivity(newActivity).subscribe({
